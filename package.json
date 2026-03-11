@@ -1,0 +1,31 @@
+{
+  "name": "reposcout-app",
+  "version": "1.0.0",
+  "description": "RepoScout is a web application that helps developers organize and track their open-source contribution journey.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mishell-cardenas/RepoScout-app.git"
+  },
+  "keywords": [],
+  "author": "Mishell Cardenas Espinosa & Jordan Ellison",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mishell-cardenas/RepoScout-app/issues"
+  },
+  "homepage": "https://github.com/mishell-cardenas/RepoScout-app#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1"
+  }
+}
