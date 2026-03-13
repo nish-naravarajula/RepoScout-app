@@ -2,6 +2,7 @@ import globals from "globals";
 import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import prettier from "eslint-plugin-prettier";
+import react from "eslint-plugin-react";
 
 export default [
   {
@@ -22,13 +23,22 @@ export default [
         ...globals.es2025,
       },
     },
+
     plugins: {
       prettier: prettier,
+      react: react,
+    },
+
+    settings: {
+      react: {
+        version: "detect",
+      },
     },
 
     rules: {
-      // ESLint recommended rules
       ...js.configs.recommended.rules,
+      ...react.configs.recommended.rules,
+      ...react.configs["jsx-runtime"].rules,
 
       indent: [
         "error",
@@ -43,7 +53,6 @@ export default [
       semi: ["error", "always"],
       "no-console": 0,
 
-      // Prettier integration - this runs Prettier through ESLint
       "prettier/prettier": [
         "error",
         {

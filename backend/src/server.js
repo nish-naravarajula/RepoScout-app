@@ -1,12 +1,12 @@
 import "dotenv/config";
 import express from "express";
-import { connectDB } from "./db/connection.js";
+import { connectDB } from "./config/db.js";
 
 // TEST ROUTES: TO UPDATE AS WE PROGRESS
 import profileRoutes from "./routes/profileRoutes.js";
 import trackedRepoRoutes from "./routes/trackedRepoRoutes.js";
 import contributionRoutes from "./routes/contributionRoutes.js";
-import githubRoutes from "./routes/githubRoutes.js";
+import githubRoutes from "./routes/trackedRepoRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
