@@ -1,0 +1,44 @@
+.badge-section {
+  margin-bottom: 1.75rem;
+}
+
+.badge-section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #24292f;
+}
+
+.badge-section-empty-text {
+  color: #57606a;
+}
+
+.badge-section-badge-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.badge-section-image {
+  height: 32px;
+  display: block;
+}
+
+.badge-section-delete-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background-color: #cf222e;
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  cursor: pointer;
+}
+
+.badge-section-badge-wrapper:hover .badge-section-delete-btn {
+  display: flex;
+}

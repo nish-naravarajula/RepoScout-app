@@ -1,0 +1,8 @@
+.profile-page {
+  min-height: 100vh;
+  background-color: #f6f8fa;
+}
+
+.profile-page-content {
+  max-width: 1400px;
+}
