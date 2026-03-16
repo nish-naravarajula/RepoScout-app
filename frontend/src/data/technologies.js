@@ -86,6 +86,24 @@ export const TECHNOLOGIES = {
       badgeUrl:
         "https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white",
     },
+    {
+      id: "nextjs",
+      name: "Next.js",
+      badgeUrl:
+        "https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white",
+    },
+    {
+      id: "bootstrap",
+      name: "Bootstrap",
+      badgeUrl:
+        "https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white",
+    },
+    {
+      id: "express",
+      name: "Express",
+      badgeUrl:
+        "https://img.shields.io/badge/Express.js-404D59?style=for-the-badge",
+    },
   ],
   databases: [
     {
@@ -105,6 +123,18 @@ export const TECHNOLOGIES = {
       name: "Postgres",
       badgeUrl:
         "https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white",
+    },
+    {
+      id: "sqlite",
+      name: "SQLite",
+      badgeUrl:
+        "https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white",
+    },
+    {
+      id: "supabase",
+      name: "Supabase",
+      badgeUrl:
+        "https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white",
     },
   ],
 };
