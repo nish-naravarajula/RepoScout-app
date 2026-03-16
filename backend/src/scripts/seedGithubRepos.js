@@ -1,12 +1,12 @@
 import "dotenv/config";
 import { connectDB } from "../config/db.js";
 
-const MAX_REPOS = 1000;
+const MAX_REPOS = 1050;
 
 async function seedRepos() {
   try {
     const db = await connectDB();
-    const collection = db.collection("trackedRepos"); // CHANGE COLLECTION NAME BEFORE POPULATING
+    const collection = db.collection("repos");
 
     await collection.createIndex({ githubId: 1 }, { unique: true });
 
@@ -19,6 +19,8 @@ async function seedRepos() {
       "api",
       "web",
       "cli",
+      "mongodb",
+      "express",
     ];
 
     const allRepos = [];
@@ -28,7 +30,7 @@ async function seedRepos() {
         const url =
           `https://api.github.com/search/repositories` +
           `?q=${topic}+stars:>50` +
-          `&sort=stars&order=desc&per_page=30&page=${page}`;
+          `&sort=stars&order=desc&per_page=100&page=${page}`;
 
         const response = await fetch(url, {
           headers: {
@@ -40,7 +42,9 @@ async function seedRepos() {
 
         const data = await response.json();
 
-        for (const repo of data.items) {
+        const repos = Array.isArray(data) ? data : (data.items ?? []);
+
+        for (const repo of repos) {
           allRepos.push({
             githubId: repo.id,
             name: repo.name,
@@ -69,9 +73,13 @@ async function seedRepos() {
 
     const repos = Array.from(unique.values()).slice(0, MAX_REPOS);
 
-    await collection.deleteMany({});
-
-    await collection.insertMany(repos);
+    for (const repo of repos) {
+      await collection.updateOne(
+        { githubId: repo.githubId },
+        { $set: repo },
+        { upsert: true },
+      );
+    }
 
     console.log(`Inserted ${repos.length} repositories`);
     process.exit(0);

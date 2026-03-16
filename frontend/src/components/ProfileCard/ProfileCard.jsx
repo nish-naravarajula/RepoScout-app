@@ -20,15 +20,8 @@ function ProfileCard(props) {
     <div>
       <div className="card profile-card shadow-sm">
         <div className="card-body p-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <p className="profile-card-path mb-0">user / README.md</p>
 
-            <button type="button" className="btn btn-sm btn-light border">
-              <i className="bi bi-pencil"></i>
-            </button>
-          </div>
-
-          <h2 className="profile-card-title">Hello! {firstName}</h2>
+          <h2 className="profile-card-title">Hello, {firstName}! Add your skills here:</h2>
 
           <hr />
 

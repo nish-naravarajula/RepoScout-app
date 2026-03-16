@@ -9,7 +9,7 @@ Return repos stored in MongoDB
 router.get("/", async (req, res) => {
   try {
     const repos = await req.db
-      .collection("trackedRepos")
+      .collection("repos")
       .find({})
       .limit(50)
       .toArray();
