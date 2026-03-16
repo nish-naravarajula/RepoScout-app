@@ -1,0 +1,53 @@
+.profile-sidebar {
+  padding-right: 1rem;
+}
+
+.profile-sidebar-image-container {
+  width: 100%;
+  max-width: 320px;
+}
+
+.profile-sidebar-image,
+.profile-sidebar-empty-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 6px solid #000000;
+  border-radius: 50%;
+  background-color: white;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-sidebar-empty-image {
+  flex-direction: column;
+}
+
+.profile-sidebar-empty-icon {
+  font-size: 7rem;
+  color: black;
+}
+
+.profile-sidebar-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #24292f;
+}
+
+.profile-sidebar-username {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #57606a;
+}
+
+.profile-sidebar-dashboard-btn {
+  width: 100%;
+  max-width: 320px;
+  padding: 0.9rem 1rem;
+  background-color: white;
+  border: 1px solid #d0d7de;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+}

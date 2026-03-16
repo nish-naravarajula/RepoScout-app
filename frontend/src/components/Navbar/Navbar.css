@@ -1,0 +1,40 @@
+.navbar-custom {
+  min-height: 72px;
+  background-color: #101411;
+}
+
+.navbar-github-icon {
+  font-size: 2rem;
+  color: white;
+}
+
+.navbar-link {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navbar-link:hover {
+  color: #d0d7de;
+}
+
+.navbar-search {
+  width: 280px;
+  background-color: #24292f;
+  border: 1px solid #57606a;
+  color: white;
+}
+
+.navbar-search::placeholder {
+  color: #c9d1d9;
+}
+
+.navbar-auth-link {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-auth-link:hover {
+  color: #d0d7de;
+}
