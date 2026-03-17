@@ -1,4 +1,5 @@
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -8,13 +9,13 @@ function Navbar() {
           <i className="bi bi-github navbar-github-icon"></i>
 
           <div className="d-flex align-items-center gap-4">
-            <a href="/" className="navbar-link">
+            <a Link="/" className="navbar-link">
               Home
             </a>
-            <a href="/" className="navbar-link">
+            <a Link="/profile" className="navbar-link">
               Profile
             </a>
-            <a href="/" className="navbar-link">
+            <a Link="/dashboard" className="navbar-link">
               Dashboard
             </a>
           </div>

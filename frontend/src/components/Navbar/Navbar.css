@@ -17,6 +17,7 @@
 
 .navbar-link:hover {
   color: #d0d7de;
+  cursor: pointer;
 }
 
 .navbar-search {
