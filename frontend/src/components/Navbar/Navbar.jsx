@@ -9,15 +9,15 @@ function Navbar() {
           <i className="bi bi-github navbar-github-icon"></i>
 
           <div className="d-flex align-items-center gap-4">
-            <a Link="/" className="navbar-link">
+            <Link to="/" className="navbar-link">
               Home
-            </a>
-            <a Link="/profile" className="navbar-link">
+            </Link>
+            <Link to="/profile" className="navbar-link">
               Profile
-            </a>
-            <a Link="/dashboard" className="navbar-link">
-              Dashboard
-            </a>
+            </Link>
+            <Link to="/matches" className="navbar-link">
+              Matches
+            </Link>
           </div>
         </div>
 

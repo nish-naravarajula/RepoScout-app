@@ -1,0 +1,50 @@
+.recommendation-page {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.recommendation-page-content {
+  max-width: 1400px;
+}
+
+.recommendation-page-icon {
+  font-size: 1.5rem;
+  color: #24292f;
+}
+
+.recommendation-page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #24292f;
+}
+
+.recommendation-page-search {
+  width: 280px;
+}
+
+.recommendation-search-input {
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.recommendation-search-input:focus {
+  border-color: #0969da;
+  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+}
+
+.recommendation-results-count {
+  font-size: 0.8rem;
+  color: #57606a;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 576px) {
+  .recommendation-page-search {
+    width: 100%;
+  }
+
+  .recommendation-page-title {
+    font-size: 1.5rem;
+  }
+}
