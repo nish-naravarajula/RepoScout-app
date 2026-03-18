@@ -20,17 +20,6 @@
   cursor: pointer;
 }
 
-.navbar-search {
-  width: 280px;
-  background-color: #24292f;
-  border: 1px solid #57606a;
-  color: white;
-}
-
-.navbar-search::placeholder {
-  color: #c9d1d9;
-}
-
 .navbar-auth-link {
   color: white;
   text-decoration: none;

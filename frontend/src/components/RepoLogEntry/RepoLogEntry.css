@@ -12,13 +12,9 @@
   gap: 1.5rem;
 }
 
-.contribution-form-header {
-  margin-bottom: 0.5rem;
-}
-
 .contribution-form-title {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #111827;
 }
@@ -26,13 +22,14 @@
 .contribution-field-group {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.35rem;
 }
 
 .contribution-label {
-  font-size: 1.15rem;
+  font-size: 1.10rem;
   font-weight: 700;
   color: #111827;
+  margin: 0;
 }
 
 .contribution-datetime-input {
@@ -55,7 +52,7 @@
   background-color: #ffffff;
   color: #111827;
   resize: vertical;
-  min-height: 110px;
+  min-height: 10px;
   box-sizing: border-box;
   font-family: inherit;
 }
@@ -63,8 +60,7 @@
 .contribution-datetime-input:focus,
 .contribution-textarea:focus {
   outline: none;
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+  border-color: #2a43e3;
 }
 
 .contribution-button-row {

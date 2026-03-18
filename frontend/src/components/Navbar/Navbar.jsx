@@ -25,12 +25,6 @@ function Navbar() {
         </div>
 
         <div className="d-flex align-items-center gap-3">
-          <input
-            type="text"
-            className="form-control navbar-search"
-            placeholder="Search or jump to..."
-          />
-
           <button type="button" className="btn btn-outline-light">
             Log Out
           </button>

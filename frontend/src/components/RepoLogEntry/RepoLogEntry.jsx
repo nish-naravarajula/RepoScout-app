@@ -2,10 +2,10 @@ import { func } from "prop-types";
 import "./RepoLogEntry.css";
 import { useState } from "react";
 
-function RepoLogEntry(onAddLog, repoName) {
+function RepoLogEntry( {onAddLog, repoName} ) {
   const [formData, setFormData] = useState({
     date: "",
-    focusAraea: "",
+    focusArea: "",
     filesModified: "",
     bugsFixed: "",
     learned: "",
@@ -57,19 +57,16 @@ function RepoLogEntry(onAddLog, repoName) {
   return (
     <div className="contribution-form-wrapper">
       <form className="contribution-form" onSubmit={handleSubmit}>
-        <div className="contribution-form-header">
-          <h2 className="contribution-form-title">Repo: {repoName}</h2>
-        </div>
         <div className="contribution-field-group">
           <label htmlFor="dateTime" className="contribution-label">
-            Date and time:
+            Date:
           </label>
           <input
-            id="dateTime"
-            type="datetime-local"
-            name="dateTime"
+            id="date"
+            type="date"
+            name="date"
             className="contribution-datetime-input"
-            value={formData.dateTime}
+            value={formData.date}
             onChange={handleChange}
           />
         </div>
@@ -89,7 +86,7 @@ function RepoLogEntry(onAddLog, repoName) {
 
         <div className="contribution-field-group">
           <label htmlFor="filesModified" className="contribution-label">
-            Files created/modified:
+            Files created or modified:
           </label>
           <textarea
             id="filesModified"

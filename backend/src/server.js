@@ -4,12 +4,8 @@ import { connectDB } from "./config/db.js";
 import profileRouter from "./routes/profileRoutes.js";
 import trackedRepoRouter from "./routes/trackedRepoRoutes.js";
 import matchRouter from "./routes/matchRoutes.js";
+import repoLogRouter from "./routes/repoLogRoutes.js";
 
-// TEST ROUTES: TO UPDATE AS WE PROGRESS
-// import profileRoutes from "./routes/profileRoutes.js";
-// import trackedRepoRoutes from "./routes/trackedRepoRoutes.js";
-// import contributionRoutes from "./routes/contributionRoutes.js";
-// import githubRoutes from "./routes/trackedRepoRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,20 +23,10 @@ async function startServer() {
       next();
     });
 
-    // TEST ROUTES: TO UPDATE AS WE PROGRESS
-    // app.use("/api/profiles", profileRoutes);
-    // app.use("/api/tracked-repos", trackedRepoRoutes);
-    // app.use("/api/contributions", contributionRoutes);
-    // app.use("/api/github", githubRoutes);
-
-    // TEMP test route for frontend
-    /*app.get("/api/tracked-repos", (req, res) => {
-      res.json([{ id: 1, name: "test-repo" }]);
-    }); */
-
     app.use("/api/profile", profileRouter);
     app.use("/api/tracked-repos", trackedRepoRouter);
     app.use("/api/match", matchRouter);
+    app.use("/api/repo-logs", repoLogRouter);
 
     // test route
     app.get("/", (req, res) => {
