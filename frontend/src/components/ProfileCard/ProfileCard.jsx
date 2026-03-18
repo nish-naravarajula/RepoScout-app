@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import BadgeSection from "../BadgeSection/BadgeSection";
 import "./ProfileCard.css";
@@ -48,9 +49,11 @@ function ProfileCard(props) {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        <button type="button" className="profile-sidebar-dashboard-btn mt-4">
-          Open-Source Dashboard
-        </button>
+        <Link to="/dashboard">
+          <button type="button" className="profile-sidebar-dashboard-btn mt-4">
+            Open-Source Dashboard
+          </button>
+        </Link>
       </div>
     </div>
   );

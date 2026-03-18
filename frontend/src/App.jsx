@@ -10,14 +10,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-      { /* EDIT ROUTERS AS PAGES ARE ADDED, MISSING: HOMEPAGE AND DASHBOARD}
-        { /* <Route path="/" element={<HomePage />} /> */}
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="matches" element={<RecommendationPage />} />
-        <Route path="/repo-logs" element={<RepoLogPage />} />
+        <Route path="/matches" element={<RecommendationPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
-        { /* <Route path="/dashboard" element={<DashboardPage />} /> */ }
+        <Route path="/repo-logs/:repoName" element={<RepoLogPage />} />
       </Routes>
     </BrowserRouter>
   );

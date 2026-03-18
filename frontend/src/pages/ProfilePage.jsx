@@ -185,7 +185,6 @@ function ProfilePage() {
   };
 
   const handleEditUsername = () => {
-
     const username = prompt("Enter GitHub username:", profile.username);
     if (username === null) {
       return;
@@ -265,7 +264,10 @@ function ProfilePage() {
         {saving && (
           <div className="alert alert-secondary">Saving changes...</div>
         )}
-
+        <div className="d-flex align-items-center mb-4">
+          <i className="bi bi-person-circle profile-page-icon"></i>
+          <h1 className="profile-page-title mb-0"> Your Profile</h1>
+        </div>
         <div className="row g-4 justify-content-center align-items-stretch">
           <div className="col-lg-4 d-flex flex-column">
             <ProfileSidebar

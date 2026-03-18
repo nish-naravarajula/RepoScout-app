@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import RepoLogEntry from "../components/RepoLogEntry/RepoLogEntry.jsx";
 import RepoLogsTimeline from "../components/RepoLogsTimeline/RepoLogsTimeline.jsx";
@@ -6,14 +7,13 @@ import "./RepoLogs.css";
 
 function RepoLogPage() {
   const [logs, setLogs] = useState([]);
-
-  const repo_name = "repo_name"; // UPDATE LATER TO DYNAMIC REPO NAME BASED ON USER SELECTION
+  const { repoName } = useParams();
 
   useEffect(() => {
     async function fetchRepoLogs() {
       try {
         const response = await fetch(
-          `/api/repo-logs?repoName=${encodeURIComponent(repo_name)}`,
+          `/api/repo-logs?repoName=${encodeURIComponent(repoName)}`,
         );
 
         if (!response.ok) {
@@ -27,8 +27,10 @@ function RepoLogPage() {
       }
     }
 
-    fetchRepoLogs();
-  }, [repo_name]);
+    if (repoName) {
+      fetchRepoLogs();
+    }
+  }, [repoName]);
 
   async function handleAddLog(newLogEntry) {
     try {
@@ -45,7 +47,6 @@ function RepoLogPage() {
       }
 
       const savedLog = await response.json();
-
       setLogs((prevLogs) => [savedLog, ...prevLogs]);
     } catch (error) {
       console.error("Error saving repo log:", error);
@@ -58,11 +59,12 @@ function RepoLogPage() {
       <div className="project-log-page">
         <div className="project-log-container">
           <h1 className="project-log-page-title">
-            Open-source repo: {repo_name}
+            Open-source repo: {repoName}
           </h1>
+
           <div className="project-log-layout">
             <div className="project-log-left">
-              <RepoLogEntry repoName={repo_name} onAddLog={handleAddLog} />
+              <RepoLogEntry repoName={repoName} onAddLog={handleAddLog} />
             </div>
 
             <div className="project-log-right">

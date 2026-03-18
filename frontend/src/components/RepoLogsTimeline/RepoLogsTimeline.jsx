@@ -60,6 +60,16 @@ function RepoLogsTimeline({ logs, setLogs }) {
   const groupedLogs = groupLogsByDate(logs);
   const sortedDates = sortGroupedDates(groupedLogs);
 
+  if (!logs || logs.length === 0) {
+    return (
+      <div className="log-timeline">
+        <div className="log-timeline-empty-state">
+          <p className="log-timeline-empty-text">No logs added yet.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="log-timeline">
       {sortedDates.map((dateKey) => {

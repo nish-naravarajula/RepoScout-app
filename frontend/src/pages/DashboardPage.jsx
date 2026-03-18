@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import ConfirmModal from "../components/ConfirmModal/ConfirmModal.jsx";
 import "./DashboardPage.css";
@@ -9,6 +10,8 @@ function DashboardPage() {
   const [error, setError] = useState(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [untrackTarget, setUntrackTarget] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTracked();
@@ -60,7 +63,11 @@ function DashboardPage() {
     }
   }, [untrackTarget]);
 
-  // Filter
+  function handleLogRepo(repo) {
+    const repoIdentifier = repo.fullName || repo.name;
+    navigate(`/repo-logs/${encodeURIComponent(repoIdentifier)}`);
+  }
+
   const filtered = searchFilter.trim()
     ? trackedRepos.filter((r) => {
         const q = searchFilter.toLowerCase();
@@ -73,7 +80,6 @@ function DashboardPage() {
       })
     : trackedRepos;
 
-  // Get unique languages for the summary
   const languages = [
     ...new Set(trackedRepos.map((r) => r.language).filter(Boolean)),
   ];
@@ -89,6 +95,7 @@ function DashboardPage() {
     if (!dateStr) {
       return "";
     }
+
     const date = new Date(dateStr);
     const now = new Date();
     const diffMs = now - date;
@@ -111,7 +118,6 @@ function DashboardPage() {
       <Navbar />
 
       <div className="container-fluid dashboard-page-content py-4 px-4 mt-5">
-        {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
           <div className="d-flex align-items-center gap-2">
             <i className="bi bi-person-circle dashboard-page-icon"></i>
@@ -129,7 +135,6 @@ function DashboardPage() {
           </div>
         </div>
 
-        {/* Summary card */}
         <div className="dashboard-summary-card mb-4">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h2 className="dashboard-summary-title mb-0">
@@ -176,7 +181,6 @@ function DashboardPage() {
           )}
         </div>
 
-        {/* Loading */}
         {loading && (
           <div className="text-center py-5">
             <div className="spinner-border text-secondary" role="status">
@@ -185,27 +189,24 @@ function DashboardPage() {
           </div>
         )}
 
-        {/* Error */}
         {error && (
           <div className="alert alert-danger">
             {error}. Make sure your backend is running on port 3000.
           </div>
         )}
 
-        {/* Empty state */}
         {!loading && !error && trackedRepos.length === 0 && (
           <div className="dashboard-empty-state">
             <i className="bi bi-inbox dashboard-empty-icon"></i>
             <h3>No tracked repositories yet</h3>
             <p>
-              Start by exploring repos on the{" "}
-              <a href="/">Home page</a> or check your{" "}
-              <a href="/matches">Matches</a> to find repos that fit your skills.
+              Start by exploring repos on the <a href="/">Home page</a> or check
+              your <a href="/matches">Matches</a> to find repos that fit your
+              skills.
             </p>
           </div>
         )}
 
-        {/* No filter results */}
         {!loading &&
           !error &&
           trackedRepos.length > 0 &&
@@ -215,14 +216,10 @@ function DashboardPage() {
             </div>
           )}
 
-        {/* Tracked repos grid */}
         {!loading && filtered.length > 0 && (
           <div className="row g-3">
             {filtered.map((repo) => (
-              <div
-                key={repo.githubId || repo._id}
-                className="col-12 col-md-6"
-              >
+              <div key={repo.githubId || repo._id} className="col-12 col-md-6">
                 <div className="dashboard-repo-card">
                   <div className="d-flex justify-content-between align-items-start mb-2">
                     <div className="d-flex align-items-center gap-2">
@@ -241,13 +238,23 @@ function DashboardPage() {
                       </a>
                     </div>
 
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-outline-danger dashboard-untrack-btn"
-                      onClick={() => handleUntrackClick(repo)}
-                    >
-                      <i className="bi bi-x-lg"></i> Untrack
-                    </button>
+                    <div className="dashboard-repo-actions">
+                      <button
+                        type="button"
+                        className="btn btn-sm dashboard-log-btn"
+                        onClick={() => handleLogRepo(repo)}
+                      >
+                        <i className="bi bi-journal-text"></i> Log Repo
+                      </button>
+
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-danger dashboard-untrack-btn"
+                        onClick={() => handleUntrackClick(repo)}
+                      >
+                        Untrack
+                      </button>
+                    </div>
                   </div>
 
                   <p className="dashboard-repo-desc">
@@ -273,8 +280,7 @@ function DashboardPage() {
                         </span>
                       )}
                       <span className="dashboard-repo-stat">
-                        <i className="bi bi-star"></i>{" "}
-                        {formatCount(repo.stars)}
+                        <i className="bi bi-star"></i> {formatCount(repo.stars)}
                       </span>
                       <span className="dashboard-repo-stat">
                         <i className="bi bi-diagram-2"></i>{" "}
