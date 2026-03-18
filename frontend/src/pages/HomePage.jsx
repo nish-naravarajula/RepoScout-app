@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import "./HomePage.css";
 
@@ -8,25 +8,36 @@ function HomePage() {
   const [error, setError] = useState(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
+  const [trackedIds, setTrackedIds] = useState(new Set());
 
   useEffect(() => {
-    async function fetchRepos() {
+    async function fetchData() {
       try {
         setLoading(true);
-        const res = await fetch("/api/tracked-repos");
-        if (!res.ok) {
-          throw new Error(`Failed to load repos: ${res.status}`);
+
+        const [reposRes, trackedRes] = await Promise.all([
+          fetch("/api/tracked-repos"),
+          fetch("/api/tracked-repos/user"),
+        ]);
+
+        if (!reposRes.ok) {
+          throw new Error(`Failed to load repos: ${reposRes.status}`);
         }
-        const data = await res.json();
-        setRepos(data);
+        const reposData = await reposRes.json();
+        setRepos(reposData);
+
+        if (trackedRes.ok) {
+          const trackedData = await trackedRes.json();
+          setTrackedIds(new Set(trackedData.map((r) => r.githubId)));
+        }
       } catch (err) {
-        console.error("Error loading repos:", err);
+        console.error("Error loading data:", err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     }
-    fetchRepos();
+    fetchData();
   }, []);
 
   // Get unique languages for the filter dropdown
@@ -52,6 +63,39 @@ function HomePage() {
     }
     return String(n);
   }
+
+  const handleTrack = useCallback(
+    async (repo) => {
+      if (trackedIds.has(repo.githubId)) {
+        return;
+      }
+      try {
+        const res = await fetch("/api/tracked-repos/user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            githubId: repo.githubId,
+            name: repo.name,
+            fullName: repo.fullName,
+            owner: repo.owner,
+            description: repo.description,
+            url: repo.url,
+            language: repo.language,
+            stars: repo.stars,
+            forks: repo.forks,
+            openIssues: repo.openIssues,
+            topics: repo.topics,
+          }),
+        });
+        if (res.ok || res.status === 409) {
+          setTrackedIds((prev) => new Set([...prev, repo.githubId]));
+        }
+      } catch (err) {
+        console.error("Error tracking repo:", err);
+      }
+    },
+    [trackedIds],
+  );
 
   return (
     <div className="home-page">
@@ -159,6 +203,25 @@ function HomePage() {
                       <span className="home-repo-stat">
                         <i className="bi bi-diagram-2"></i> {formatCount(repo.forks || 0)}
                       </span>
+                    </div>
+
+                    <div className="mt-2">
+                      <button
+                        type="button"
+                        className={`btn btn-sm home-repo-track-btn ${trackedIds.has(repo.githubId) ? "btn-outline-success" : "btn-success"}`}
+                        onClick={() => handleTrack(repo)}
+                        disabled={trackedIds.has(repo.githubId)}
+                      >
+                        {trackedIds.has(repo.githubId) ? (
+                          <>
+                            <i className="bi bi-check-lg"></i> Tracked
+                          </>
+                        ) : (
+                          <>
+                            <i className="bi bi-plus-lg"></i> Track
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>

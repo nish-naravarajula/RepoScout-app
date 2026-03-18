@@ -18,6 +18,9 @@ function Navbar() {
             <Link to="/matches" className="navbar-link">
               Matches
             </Link>
+            <Link to="/dashboard" className="navbar-link">
+              Dashboard
+            </Link>
           </div>
         </div>
 
