@@ -57,7 +57,7 @@ function RepoLogPage() {
     <div>
       <Navbar />
       <div className="project-log-page">
-        <div className="project-log-container ">
+        <div className="project-log-container py-4 px-4 mt-3">
           <h1 className="project-log-page-title bi-journal-code">
             Repo: {repoName}
           </h1>
