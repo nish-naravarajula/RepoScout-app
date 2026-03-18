@@ -244,7 +244,7 @@ function DashboardPage() {
                         className="btn btn-sm dashboard-log-btn"
                         onClick={() => handleLogRepo(repo)}
                       >
-                        <i className="bi bi-journal-text"></i> Log Repo
+                        <i className="bi bi-journal-code"></i> Log Repo
                       </button>
 
                       <button
