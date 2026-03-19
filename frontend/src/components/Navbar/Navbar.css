@@ -28,3 +28,9 @@
 .navbar-auth-link:hover {
   color: #d0d7de;
 }
+
+.navbar-username {
+  color: #d0d7de;
+  font-size: 0.85rem;
+  font-weight: 600;
+}

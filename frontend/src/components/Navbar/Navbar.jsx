@@ -1,7 +1,16 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
 
 function Navbar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    await logout();
+    navigate("/login");
+  }
+
   return (
     <nav className="navbar-custom navbar navbar-expand-lg px-4">
       <div className="container-fluid">
@@ -26,7 +35,16 @@ function Navbar() {
         </div>
 
         <div className="d-flex align-items-center gap-3">
-          <button type="button" className="btn btn-outline-light">
+          {user && (
+            <span className="navbar-username">
+              <i className="bi bi-person-circle"></i> {user.username}
+            </span>
+          )}
+          <button
+            type="button"
+            className="btn btn-outline-light"
+            onClick={handleLogout}
+          >
             Log Out
           </button>
         </div>

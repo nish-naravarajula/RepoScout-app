@@ -73,7 +73,7 @@ matchRouter.get("/", async (req, res) => {
     const db = req.db;
 
     // 1. Get user profile
-    const profile = await db.collection("users").findOne({});
+    const profile = req.user;
     if (!profile) {
       return res.status(404).json({ message: "No profile found" });
     }

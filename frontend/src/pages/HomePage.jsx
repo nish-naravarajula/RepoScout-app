@@ -1,6 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import Navbar from "../components/Navbar/Navbar.jsx";
+import Pagination from "../components/Pagination/Pagination.jsx";
 import "./HomePage.css";
+
+const REPOS_PER_PAGE = 12;
 
 function HomePage() {
   const [repos, setRepos] = useState([]);
@@ -9,6 +12,7 @@ function HomePage() {
   const [searchFilter, setSearchFilter] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
   const [trackedIds, setTrackedIds] = useState(new Set());
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     async function fetchData() {
@@ -56,6 +60,21 @@ function HomePage() {
 
     return matchesSearch && matchesLanguage;
   });
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchFilter, languageFilter]);
+
+  // Pagination
+  const totalPages = Math.ceil(filtered.length / REPOS_PER_PAGE);
+  const startIndex = (currentPage - 1) * REPOS_PER_PAGE;
+  const paginatedRepos = filtered.slice(startIndex, startIndex + REPOS_PER_PAGE);
+
+  function handlePageChange(page) {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   function formatCount(n) {
     if (n >= 1000) {
@@ -155,11 +174,11 @@ function HomePage() {
         {!loading && filtered.length > 0 && (
           <>
             <p className="home-page-results-count">
-              {filtered.length} repositories
+              {filtered.length} repositories — page {currentPage} of {totalPages}
             </p>
 
             <div className="row g-3">
-              {filtered.map((repo) => (
+              {paginatedRepos.map((repo) => (
                 <div key={repo.githubId || repo._id} className="col-12 col-md-6 col-lg-4">
                   <div className="home-repo-card">
                     <div className="d-flex align-items-center gap-2 mb-2">
@@ -227,6 +246,12 @@ function HomePage() {
                 </div>
               ))}
             </div>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </>
         )}
       </div>

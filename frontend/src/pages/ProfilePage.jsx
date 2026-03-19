@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import ProfileSidebar from "../components/ProfileSidebar/ProfileSidebar.jsx";
 import ProfileCard from "../components/ProfileCard/ProfileCard.jsx";
 import TechSelectModal from "../components/TechSelectModal/TechSelectModal.jsx";
+import InputModal from "../components/InputModal/InputModal.jsx";
+import ConfirmModal from "../components/ConfirmModal/ConfirmModal.jsx";
 import { TECHNOLOGIES } from "../data/technologies.js";
 import "./ProfilePage.css";
 
@@ -22,6 +26,15 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  // Modal state
+  const [showEditName, setShowEditName] = useState(false);
+  const [showEditUsername, setShowEditUsername] = useState(false);
+  const [showEditImage, setShowEditImage] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const getSelectedBadges = (categoryKey, selectedIds) => {
     return TECHNOLOGIES[categoryKey].filter((technology) => {
@@ -164,64 +177,32 @@ function ProfilePage() {
     });
   };
 
-  const handleEditInfo = () => {
-    const firstName = prompt("Enter first name:", profile.firstName);
-    if (firstName === null) {
-      return;
-    }
-
-    const lastName = prompt("Enter last name:", profile.lastName);
-    if (lastName === null) {
-      return;
-    }
-
-    setProfile((previousProfile) => {
-      return {
-        ...previousProfile,
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-      };
-    });
+  const handleEditInfo = (values) => {
+    setProfile((prev) => ({
+      ...prev,
+      firstName: values.firstName.trim(),
+      lastName: values.lastName.trim(),
+    }));
+    setShowEditName(false);
   };
 
-  const handleEditUsername = () => {
-    const username = prompt("Enter GitHub username:", profile.username);
-    if (username === null) {
-      return;
-    }
-
-    setProfile((previousProfile) => {
-      return {
-        ...previousProfile,
-        username: username.trim(),
-      };
-    });
+  const handleEditUsername = (values) => {
+    setProfile((prev) => ({
+      ...prev,
+      username: values.username.trim(),
+    }));
+    setShowEditUsername(false);
   };
 
-  const handleAddImage = () => {
-    const imageUrl = prompt("Paste profile image URL:", profile.profileImage);
-
-    if (imageUrl === null) {
-      return;
-    }
-
-    setProfile((previousProfile) => {
-      return {
-        ...previousProfile,
-        profileImage: imageUrl.trim(),
-      };
-    });
+  const handleAddImage = (values) => {
+    setProfile((prev) => ({
+      ...prev,
+      profileImage: values.profileImage.trim(),
+    }));
+    setShowEditImage(false);
   };
 
   const handleDeleteProfile = async () => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete the full profile?",
-    );
-
-    if (!confirmed) {
-      return;
-    }
-
     try {
       setSaving(true);
       setMessage("");
@@ -231,14 +212,15 @@ function ProfilePage() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete profile");
+        throw new Error("Failed to delete account");
       }
 
-      setProfile(DEFAULT_PROFILE);
-      setMessage("Profile deleted successfully.");
+      await logout();
+      navigate("/login");
     } catch (error) {
-      console.error("Error deleting profile:", error);
-      setMessage("Failed to delete profile.");
+      console.error("Error deleting account:", error);
+      setMessage("Failed to delete account.");
+      setShowDeleteConfirm(false);
     } finally {
       setSaving(false);
     }
@@ -274,9 +256,9 @@ function ProfilePage() {
               lastName={profile.lastName}
               username={profile.username}
               profileImage={profile.profileImage}
-              onEditInfo={handleEditInfo}
-              onEditUsername={handleEditUsername}
-              onAddImage={handleAddImage}
+              onEditInfo={() => setShowEditName(true)}
+              onEditUsername={() => setShowEditUsername(true)}
+              onAddImage={() => setShowEditImage(true)}
             />
 
             <div className="mt-auto pt-3 d-flex gap-2 justify-content-left">
@@ -291,7 +273,7 @@ function ProfilePage() {
               <button
                 type="button"
                 className="btn btn-danger"
-                onClick={handleDeleteProfile}
+                onClick={() => setShowDeleteConfirm(true)}
               >
                 Delete Profile
               </button>
@@ -343,6 +325,61 @@ function ProfilePage() {
         onClose={() => setActiveModal("")}
         onToggle={(id) => handleToggleSelection("databases", id)}
         onSave={() => setActiveModal("")}
+      />
+
+      <InputModal
+        show={showEditName}
+        title="Edit Name"
+        fields={[
+          { key: "firstName", label: "First Name", placeholder: "Enter first name" },
+          { key: "lastName", label: "Last Name", placeholder: "Enter last name" },
+        ]}
+        initialValues={{
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+        }}
+        submitLabel="Save"
+        onSubmit={handleEditInfo}
+        onCancel={() => setShowEditName(false)}
+      />
+
+      <InputModal
+        show={showEditUsername}
+        title="Edit GitHub Username"
+        fields={[
+          { key: "username", label: "GitHub Username", placeholder: "Enter your GitHub username" },
+        ]}
+        initialValues={{ username: profile.username }}
+        submitLabel="Save"
+        onSubmit={handleEditUsername}
+        onCancel={() => setShowEditUsername(false)}
+      />
+
+      <InputModal
+        show={showEditImage}
+        title="Edit Profile Image"
+        fields={[
+          {
+            key: "profileImage",
+            label: "Image URL",
+            placeholder: "Paste a profile image URL",
+            required: false,
+          },
+        ]}
+        initialValues={{ profileImage: profile.profileImage }}
+        submitLabel="Save"
+        onSubmit={handleAddImage}
+        onCancel={() => setShowEditImage(false)}
+      />
+
+      <ConfirmModal
+        show={showDeleteConfirm}
+        title="Delete Account"
+        message="Are you sure you want to delete your account? This will permanently remove your profile, tracked repos, and all data. This cannot be undone."
+        confirmLabel="Delete Account"
+        confirmVariant="danger"
+        onConfirm={handleDeleteProfile}
+        onCancel={() => setShowDeleteConfirm(false)}
       />
     </div>
   );

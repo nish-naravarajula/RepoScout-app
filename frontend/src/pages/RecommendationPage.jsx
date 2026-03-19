@@ -1,8 +1,11 @@
 import { useEffect, useState, useCallback } from "react";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import RepoCard from "../components/RepoCard/RepoCard.jsx";
+import Pagination from "../components/Pagination/Pagination.jsx";
 import { rankRepos } from "../utils/scoring.js";
 import "./RecommendationPage.css";
+
+const MATCHES_PER_PAGE = 10;
 
 function RecommendationPage() {
   const [profile, setProfile] = useState(null);
@@ -11,6 +14,7 @@ function RecommendationPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchFilter, setSearchFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Fetch profile and repos on mount
   useEffect(() => {
@@ -53,7 +57,7 @@ function RecommendationPage() {
   // Re-rank whenever repos or profile change
   useEffect(() => {
     if (allRepos.length > 0 && profile) {
-      const results = rankRepos(allRepos, profile, 30);
+      const results = rankRepos(allRepos, profile, 100);
       setRanked(results);
     }
   }, [allRepos, profile]);
@@ -71,6 +75,21 @@ function RecommendationPage() {
         );
       })
     : ranked;
+
+  // Reset page when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchFilter]);
+
+  // Pagination
+  const totalPages = Math.ceil(filtered.length / MATCHES_PER_PAGE);
+  const startIndex = (currentPage - 1) * MATCHES_PER_PAGE;
+  const paginatedMatches = filtered.slice(startIndex, startIndex + MATCHES_PER_PAGE);
+
+  function handlePageChange(page) {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   const [trackedIds, setTrackedIds] = useState(new Set());
 
@@ -190,12 +209,12 @@ function RecommendationPage() {
         {!loading && filtered.length > 0 && (
           <>
             <p className="recommendation-results-count">
-              Showing {filtered.length} of {allRepos.length} repos ranked by
-              match score
+              Showing {filtered.length} matches — page {currentPage} of{" "}
+              {totalPages}
             </p>
 
             <div className="row g-3">
-              {filtered.map((repo) => (
+              {paginatedMatches.map((repo) => (
                 <div
                   key={repo.githubId || repo._id}
                   className="col-12 col-md-6"
@@ -210,6 +229,12 @@ function RecommendationPage() {
                 </div>
               ))}
             </div>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </>
         )}
       </div>
