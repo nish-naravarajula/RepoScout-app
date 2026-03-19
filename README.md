@@ -78,6 +78,15 @@ https://docs.google.com/presentation/d/12ldf5UGDdYHakuqcsu8XN2qo2WKiWl5JAH5HUkK9
 
 ## 📸 Screenshots
 
+<img width="1511" height="808" alt="Screenshot 2026-03-18 at 22 29 06" src="https://github.com/user-attachments/assets/12cdd0b9-048a-4d89-bd54-467f83a4e484" />
+
+<img width="1511" height="808" alt="Screenshot 2026-03-18 at 22 29 30" src="https://github.com/user-attachments/assets/56f095dc-6440-44eb-a77e-356e99680a67" />
+
+<img width="1511" height="808" alt="Screenshot 2026-03-18 at 22 29 43" src="https://github.com/user-attachments/assets/22330564-7389-4cf4-abe1-2d8c7707c2ce" />
+
+<img width="1511" height="808" alt="Screenshot 2026-03-18 at 22 29 59" src="https://github.com/user-attachments/assets/cf6142a8-2c36-4263-8bb8-3edfc5f5045e" />
+
+<img width="1511" height="808" alt="Screenshot 2026-03-18 at 22 30 14" src="https://github.com/user-attachments/assets/c7022151-4ba7-4b6a-84e9-d0d532466a05" />
 
 ## 🛠️ Tech Requirements
 
