@@ -1,0 +1,14 @@
+PORT=3000
+# MongoDB connection string
+# Replace YOUR_URL_ENCODED_PASSWORD with your own Atlas credentials
+MONGO_URI="mongodb+srv://RepoScout:YOUR_URL_ENCODED_PASSWORD@reposcout.j2mourf.mongodb.net/"
+DB_NAME=RepoScout
+GITHUB_TOKEN= SEE THE FOLLOWING INSTRUCTIONS:
+              1. Navigate to Settings: Click your profile picture in the upper-right corner of any GitHub page, then select Settings.
+              2. Open Developer Settings: In the left sidebar, scroll down and click on <> Developer settings.
+              3. Access Tokens Menu: In the left sidebar, under "Personal access tokens", Fine-grained tokens.
+              4. Generate New Token: Click the Generate new token button.
+              5. Configure Token Details:
+                  - Note/Token name: Enter a descriptive name for your token to remember its purpose.
+                  - Expiration: Set an expiration date for security of 3 months. 
+              6. Select Scopes/Permissions: Metadata (Read) and Contents (Read) 
