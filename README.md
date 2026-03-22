@@ -171,3 +171,7 @@ On a separate terminal:
 cd backend
 npm run dev
 ```
+Peer Review : Absolutely Stunning project well structured and well planned 
+Full CRUD on 2 collections — User profiles and contribution logs both have create, read, update, delete. Meets rubric requirement.
+Good UX flow — Sign in → Profile setup → Browse/Match → Track → Log contributions. Logical progression.
+Clean deployment — Live site works, proper separation of frontend/backend.
